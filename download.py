@@ -38,7 +38,6 @@ with sync_playwright() as playwright:
 
 
 def send_file(filepath):
-    try:
         print("Started Sending Mail")
         SMTP_SERVER = 'smtp.gmail.com'
         SMTP_PORT = 465  # Use 465 for SSL or 587 for TLS
@@ -64,7 +63,6 @@ def send_file(filepath):
             server.send_message(msg)
             print('Email successfully sent!')
 
-    except smtplib.SMTPException as e:
-        print(f"General Error Occured {e}")
+    
 
 send_file("enq.xls")
