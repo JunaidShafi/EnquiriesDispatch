@@ -48,7 +48,7 @@ def send_file(filepath):
         msg['Subject'] = 'Daily Enquiry List'
         msg['From'] = formataddr(("Junaid Shafi",GMAIL_USER))
         msg['To'] = os.getenv("RECEIVER_EMAIL")
-        msg.set_content(f'Hello Sleeping people here are the registration details on {datetime.now().date()}')
+        msg.set_content(f'Registration details on {datetime.now().date()}')
 
         file_path = filepath
         mime_type, _ = mimetypes.guess_type(file_path)
