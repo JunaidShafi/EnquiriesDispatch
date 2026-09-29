@@ -2,6 +2,7 @@ from playwright.sync_api import Playwright, sync_playwright
 import mimetypes
 import os
 import smtplib
+from email.utils import formataddr
 from email.message import EmailMessage 
 from dotenv import load_dotenv
 from datetime import datetime
@@ -21,6 +22,7 @@ def run(playwright: Playwright) -> None:
     context = browser.new_context()
     page = context.new_page()
     page.goto("https://bomis.nascorptechnologies.com/Index")
+    print(f"Navigating to {page.title()}")
     page.get_by_role("textbox", name="User Name").fill("junaidshafi@bomiskashmir.edu.in")
     page.get_by_role("textbox", name="Password").fill("Crap1234")
     page.get_by_role("button", name="Login").click()
@@ -30,6 +32,7 @@ def run(playwright: Playwright) -> None:
     page.locator("a").filter(has_text="Dynamic Reports").click()
     page.wait_for_timeout(4000)
     page.goto("https://bomis.nascorptechnologies.com/gw/adm/dynamicAdmissionReportEdit?fl=aWQ9MTImX3BsXz1odHRwczovL2JvbWlzLm5hc2NvcnB0ZWNobm9sb2dpZXMuY29tL2d3L2Z3ay9hZG1fcmVwRHluYW1pYw==", wait_until="domcontentloaded")
+    print(f"Navigating to {page.title()}")
     page.get_by_role("button", name="Click for Actions").click()
     with page.expect_download() as download_info:
         with page.expect_popup() as page1_info:
@@ -48,6 +51,7 @@ with sync_playwright() as playwright:
 
 
 def cleanfile():
+    print("Started Processing File")
     df = p.read_excel("enq.xls", header=4)
     df = df.dropna(subset=["Registration No."])
     df = df.iloc[:, 1:]
@@ -73,8 +77,6 @@ def cleanfile():
     ).reset_index(drop=True)
 
     df_sorted["S No."] = range(1, len(df_sorted) + 1)
-    print(df_sorted)
-
     file_path = "processed.xlsx"
 
     with p.ExcelWriter(file_path, engine="openpyxl") as writer:
