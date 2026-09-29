@@ -2,7 +2,7 @@ name: Enquiry
 
 on:
   schedule:
-    - cron: "30 6 * * *" # Runs every 2 hours
+    - cron: "5 7 * * *" # Runs every 2 hours
   workflow_dispatch: # Allows manual trigger button
 permissions:
   contents: write
